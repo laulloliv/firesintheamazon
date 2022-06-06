@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/style.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="img/favicon-fita.png" type="image/x-icon" />
+    <title>FiresInTheAmazon</title>
+  </head>
+  <body>
+    <header>
+      <h2 id="logo-title">FiresInTheAmazon</h2>
+      <ul>
+        <a href="http://127.0.0.1:5000/lab"><strong><li>Home</li></strong></a>
+        <a href="http://127.0.0.1:5000/lab">
+          <li>Laboratório</li>
+        </a>
+        <!-- <li>Sobre</li> -->
+      </ul>
+    </header>
+    <main>
+      <section class="home">
+        <img
+          id="logo-img"
+          src="{{url_for('static', filename='img/logo-img.png')}}"
+          alt="logo FiresInTheAmazon"
+        />
+        <p class="text-home">
+          Análise de imagens de satélites para monitoramento de <br />
+          queimadas na Amazônia
+        </p>
+        <div>
+          <a id="b-lab" class="b-buttons" href="http://127.0.0.1:5000/lab"
+            >Ir para o Laboratório</a
+          >
+          <button id="b-sbmais" class="b-buttons" onclick="window.scrollTo({ top: 400, behavior: 'smooth' })">Saiba mais</button>
+        </div>
+      </section>
+      <section class="ifam-fapeam">
+        <div class="realizacao">
+          <p id="p-realizacao">Realização</p>
+          <img
+            src="{{url_for('static', filename='img/logo-ifam.jpeg')}}"
+            alt="logo ifam"
+            id="img-lg-ifam"
+            height="120em"
+          />
+        </div>
+        <div class="apoio">
+          <p id="p-apoio">Apoio</p>
+          <img
+            src="{{url_for('static', filename='img/lg-fapeam.png')}}"
+            alt="logo-fapeam"
+            id="img-lg-fapeam"
+            height="120em"
+          />
+        </div>
+      </section>
+    </main>
+    <footer class="footer-home">
+      <p id="footer">2022&#169 Todos os direitos reservados</p>
+    </footer>
+  </body>
+</html>
