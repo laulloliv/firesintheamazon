@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/predict.css') }}"
+    />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="static/img/favicon-fita.png" type="image/x-icon" />
+    <title>FiresInTheAmazon</title>
+  </head>
+  <body>
+    <header>
+      <img
+        id="logo-fita-lab"
+        src="{{url_for('static', filename='img/logo-img.png')}}"
+        alt="Logo FITA"
+      />
+      <ul>
+        <a href="http://127.0.0.1:5000/"><li>Home</li></a>
+        <a href="http://127.0.0.1:5000/lab"></a><strong><li>Laboratório</li></strong></a>
+        <!-- <li>Sobre</li> -->
+      </ul>
+    </header>
+    <main>
+      <hr />
+
+      <section class="lab">
+        <div class="resultado-area">
+          <div class="focos-head">
+            <p id="title-resultado-burn">Resultado</p>
+            <input readonly id="p-resultado" value="{{ result['result']|length }}" style="background-color: transparent; width: 5%; font-size: 1em; margin-left: 11em; font-weight: 500; font-family: 'Open Sans', sans-serif"/>
+            <p style="font-weight: 500; font-family: 'Open Sans', sans-serif">Focos Encontrados</p>
+          </div>
+          <br>
+          <div id="files-verificados" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: -1em">
+            <hr style="background-color: #c4c4c4; width: 65%; margin-bottom: -1.6em; margin-left: 0.5em"><p id="p-resultado" style=" font-weight: 500; font-size: 0.8em; font-family: 'Opens Sans', sans-serif; color: rgba(0,0,0,0.6)">Arquivos Verificados: {{result['nfiles']}}</p></div>
+          <div class="focos">
+
+            {% for img in range(result["result"]|length) %}
+              <div class="img-foco" id="iFoco{{img + 1}}">
+                <p>{{img + 1}}. <span>{{ "ok" }}</span></p>
+                <div class="icons">
+                  <img title="Visualizar arquivo" src="{{url_for('static', filename='img/view-file.png')}}" alt="Ícone visualizar" height="23em" style="cursor:pointer" id="id{{img + 1}}" onclick="view('modal{{img + 1}}')">
+                  <img title="Deletar" src="{{url_for('static', filename='img/apgr.png')}}" alt="Ícone deletar" height="22em" style="cursor:pointer" onclick="exclui('iFoco{{img + 1}}')" >
+                </div>
+              </div>
+
+              <div id="modal{{img + 1}}" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modal{{img + 1}}')">&times;</span>
+                    <p id="view-name">{{img + 1}}. {{ result["result"][img] }}</p>
+                  <img class="img-view" src="{{ url_for('static',filename='upload/{}'.format(result['result'][img])) }}" alt="Imagem selecionada" height="240em" >
+                </div>
+              </div>
+            {% endfor %}    
+          </div>
+        </div>
+      </section>
+    </main>
+    <hr id="hr-b" />
+    <section class="ftr-apoio">
+      <div class="realizacao">
+        <img
+          src="{{url_for('static', filename='img/logo-ifam.jpeg')}}"
+          alt="logo ifam"
+          id="img-lg-ifam"
+          height="100em"
+        />
+      </div>
+      <div class="apoio">
+        <img
+          src="{{url_for('static', filename='img/lg-fapeam.png')}}"
+          alt="logo-fapeam"
+          id="img-lg-fapeam"
+          height="100em"
+        />
+      </div>
+    </section>
+    <hr id="hr-b" />
+    <footer class="footer-home">
+      <p id="footer">2022&#169 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+      
+      var mod = "";
+      var span = document.getElementsByClassName("close")[0];
+      
+      function view(idModal) {
+        var modal = document.getElementById(idModal);
+        mod = modal;
+        modal.style.display = "block";
+      }
+      
+      function closeModal(idModal) {
+        var modal = document.getElementById(idModal);
+        mod = modal;
+        modal.style.display = "none";
+      }
+      
+      window.onclick = function(event) {
+        if (event.target == mod) {
+          mod.style.display = "none";
+        }
+      }
+
+      function exclui(delImg) {
+        var dImg = document.getElementById(delImg);
+        document.getElementById("p-resultado").value--;
+        dImg.style.display = "none";
+      }
+      </script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/lab.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="static/img/favicon-fita.png" type="image/x-icon" />
+    <title>FiresInTheAmazon</title>
+  </head>
+  <body>
+    <header>
+      <img
+        id="logo-fita-lab"
+        src="{{url_for('static', filename='img/logo-img.png')}}"
+        alt="Logo FITA"
+      />
+      <ul>
+        <a href="http://127.0.0.1:5000/"><li>Home</li></a>
+        <a href="http://127.0.0.1:5000/lab"></a><strong><li>Laboratório</li></strong></a>
+        <!-- <li>Sobre</li> -->
+      </ul>
+    </header>
+    <main>
+      <hr />
+
+      <section class="lab">
+        <div id="lab-area">
+          <p id="title-lab">Analise uma Imagem de Satélite</p>
+          <p id="text-text-lab" style="font-size: 0.8em; margin: -1em 0em 2em 2.5em; width: 90%">Observação: Para analisar mútilplas imagens, certifique-se que seu arquivo encontra-se no formato .zip</p>
+          <form
+            action="http://127.0.0.1:5000/upload"
+            enctype="multipart/form-data"
+            method="post"
+          >
+            <label class="file">
+              <div id="p-input-file">
+                <img
+                  src="{{url_for('static', filename='img/upload.png')}}"
+                  alt="upload icon"
+                  id="upload-icon"
+                />
+                Selecione uma Imagem
+              </div>
+              <input type="file" required name="imageFile" id="imageFile" multiple />
+            </label>           
+            {% if error == 1 %}
+            <p class="alert-error">
+              <img id="icon-error" src="{{url_for('static', filename='img/attention-icon.png')}}" alt="ico error">
+              <span>Atenção! - Arquivo não suportado.</span>
+            </p>
+            {% else %}
+            <p class="alert-hide">
+              <span>Atenção! - Arquivo não suportado.</span>
+            </p>
+            {% endif %}
+            <div class="buttons-form">
+              <button id="b-reset" type="reset">Limpar</button>
+              <button id="b-submit" type="submit">Analisar Imagem</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      {% if result %}
+      {% if result == 0 %}
+      <section>
+        <div class="resultado-area">
+          <p id="title-resultado-noburn">Resultado</p>
+          <p id="p-resultado">Não é Queimada</p>
+        </div>
+      </section>
+      {% else %}
+      <section>
+        <div class="resultado-area">
+          <p id="title-resultado-burn">Resultado</p>
+          <p id="p-resultado">É Queimada</p>
+        </div>
+      </section>
+      {% endif %}
+      {% endif %}
+
+    </main>
+    <hr id="hr-b" />
+    <section class="ftr-apoio">
+      <div class="realizacao">
+        <img
+          src="{{url_for('static', filename='img/logo-ifam.jpeg')}}"
+          alt="logo ifam"
+          id="img-lg-ifam"
+          height="100em"
+        />
+      </div>
+      <div class="apoio">
+        <img
+          src="{{url_for('static', filename='img/lg-fapeam.png')}}"
+          alt="logo-fapeam"
+          id="img-lg-fapeam"
+          height="100em"
+        />
+      </div>
+    </section>
+    <hr id="hr-b" />
+    <footer class="footer-home">
+      <p id="footer">2022&#169 Todos os direitos reservados</p>
+    </footer>
+  </body>
+</html>
