@@ -46,6 +46,8 @@
     text-underline-offset: 0.5em;
   }
 
+/* ------------------ HOME ---------------------- */
+
   .home{
     display: flex;
     align-items: center;
@@ -119,7 +121,6 @@
 
   .ftr-apoio{
     width: 100%;
-    /* margin-top: 2em; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,8 +189,8 @@
 }
 
 #imageFile{
-  margin-right: -12em;
-  margin-left: 1.5em;
+  width: 8.5em;
+  margin-left:  1.5em;
   margin-top: 0.55em;
   padding: 0.7em 1em 0.7em 1em;
   font-size: 0.9em;
