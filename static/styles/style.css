@@ -156,6 +156,26 @@
     background-color: rgba(0, 0, 0, 0.6);
   }
 
+  .alert-error{
+    margin-top: 1em;
+    margin-left: 19em;
+    color: #f85521;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  #icon-error{
+    height: 18px;
+    margin-bottom: -0.3em;
+    margin-right: 0.1em;
+  }
+
+  .alert-hide{
+    visibility: hidden;
+    font-size: 12px;
+    margin-top: 1em;
+  }
+
   .lab{
     display: flex;
     align-items: center;
@@ -166,7 +186,7 @@
 
   #lab-area{
     width: 45%;
-    height: 15em;
+    height: 16em;
     border-radius: 10px;
     background-color: rgba(217, 217, 217, 0.6);
   }

@@ -33,6 +33,7 @@
     </header>
     <main>
       <hr />
+
       <section class="lab">
         <div id="lab-area">
           <p id="title-lab">Analise uma Imagem de Satélite</p>
@@ -50,8 +51,18 @@
                 />
                 Selecione uma Imagem
               </div>
-              <input type="file" required name="imageFile" id="imageFile" />
-            </label>
+              <input type="file" required name="imageFile" id="imageFile" multiple />
+            </label>           
+            {% if error == 1 %}
+            <p class="alert-error">
+              <img id="icon-error" src="{{url_for('static', filename='img/attention-icon.png')}}" alt="ico error">
+              <span>Atenção! - Arquivo não suportado.</span>
+            </p>
+            {% else %}
+            <p class="alert-hide">
+              <span>Atenção! - Arquivo não suportado.</span>
+            </p>
+            {% endif %}
             <div class="buttons-form">
               <button id="b-reset" type="reset">Limpar</button>
               <button id="b-submit" type="submit">Analisar Imagem</button>

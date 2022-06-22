@@ -1,5 +1,6 @@
 from fileinput import filename
 import os
+import zipfile
 from cv2 import transform
 from flask import Flask, render_template, request
 import cv2
@@ -39,8 +40,23 @@ def upload():
     else:
         imgF = 0
 
+    tam = len(img_file)
+    zipFile = img_file[:tam-3]
+
+    if img_file[tam-3:] == "zip":
+        print("======================== : ZIP")
+        path = img_file
+        zip_object = zipfile.ZipFile(file=path, mode='r')
+        zip_object.extractall('./')
+        zip_object.close()
+    else:
+        print("======================== : JPG")
+
     img = cv2.imread(img_file)
-    img = cv2.resize(img, (128, 128))
+    try:
+        img = cv2.resize(img, (128, 128))
+    except:
+        return render_template('lab.html', cls=0, imgF=0, error=1)
 
     img = img.ravel()
     scaler = MinMaxScaler()
@@ -50,9 +66,9 @@ def upload():
 
     cls = joblib_model.predict(img)[0]
     if cls == 0:
-        return render_template('lab.html', cls=cls, imgF=imgF)
+        return render_template('lab.html', cls=cls, imgF=imgF, error=0)
     else:
-        return render_template('lab.html', cls=cls, imgF=imgF)
+        return render_template('lab.html', cls=cls, imgF=imgF, error=0)
 
 
 if __name__ == '__main__':
