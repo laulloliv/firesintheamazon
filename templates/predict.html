@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/predict/style.css') }}"
+    />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="static/img/favicon-fita.png" type="image/x-icon" />
+    <title>FiresInTheAmazon</title>
+  </head>
+  <body>
+    <header>
+      <img
+        id="logo-fita-lab"
+        src="{{url_for('static', filename='img/logo-img.png')}}"
+        alt="Logo FITA"
+      />
+      <ul>
+        <a href="http://127.0.0.1:5000/"><li>Home</li></a>
+        <a href="http://127.0.0.1:5000/lab"></a><strong><li>Laboratório</li></strong></a>
+        <!-- <li>Sobre</li> -->
+      </ul>
+    </header>
+    <main>
+      <hr />
+
+      <section class="lab">
+        <div class="resultado-area">
+          <div class="focos-head">
+            <p id="title-resultado-burn">Resultado</p>
+            <p id="p-resultado">{{ qtdFocos }} Focos Encontrados</p>
+          </div>
+          <div class="focos">
+
+            {% for img in range(0,qtdFocos) %}
+              <!-- div de cada imagem de queimada -->
+              <div class="img-foco">
+                <p>{{img + 1}}. <span>{{ names[img] }}</span></p>
+                <div class="icons">
+                  <img title="Visualizar arquivo" src="{{url_for('static', filename='img/view-file.png')}}" alt="Ícone visualizar" height="23em" style="cursor:pointer" id="id1" onclick="view()">
+                  <img title="Deletar" src="{{url_for('static', filename='img/apgr.png')}}" alt="Ícone deletar" height="22em" style="cursor:pointer" >
+                </div>
+              </div>
+              <!-- --------- End Div ---------- -->
+
+               <!-- The Modal -->
+              <div id="modal{{img + 1}}" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close" onclick="closeModal()">&times;</span>
+                  <p id="view-name">{{img + 1}}. {{ names[img] }}</p>
+                  <img class="img-view" src="{{ url_for('static', filename='upload/Teste_Files/img (1).jpg') }}" alt="Imagem selecionada" height="240em">
+                </div>
+              </div>
+              <!-- The Modal End -->
+
+            {% endfor %}    
+
+          </div>
+        </div>
+      </section>
+    </main>
+    <hr id="hr-b" />
+    <section class="ftr-apoio">
+      <div class="realizacao">
+        <img
+          src="{{url_for('static', filename='img/logo-ifam.jpeg')}}"
+          alt="logo ifam"
+          id="img-lg-ifam"
+          height="100em"
+        />
+      </div>
+      <div class="apoio">
+        <img
+          src="{{url_for('static', filename='img/lg-fapeam.png')}}"
+          alt="logo-fapeam"
+          id="img-lg-fapeam"
+          height="100em"
+        />
+      </div>
+    </section>
+    <hr id="hr-b" />
+    <footer class="footer-home">
+      <p id="footer">2022&#169 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+      // Get the modal
+      var modal = document.getElementById("modal1");
+      
+      // Get the button that opens the modal
+      var btn = document.getElementById("id1");
+      
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+      
+      // When the user clicks the button, open the modal 
+      function view() {
+        modal.style.display = "block";
+      }
+      
+      // When the user clicks on <span> (x), close the modal
+      function closeModal() {
+        modal.style.display = "none";
+      }
+      
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+      </script>
+  </body>
+</html>
