@@ -83,6 +83,13 @@ def upload():
                 names.append(iName)
                 queimadas.append(img)
 
+        try:
+            source = 'static/' + zipFile
+            dest = 'static/upload/Files'
+            os.rename(source, dest)
+        except:
+            pass
+
         return render_template('predict.html', qtdFocos=len(queimadas), queimadas=queimadas, names=names)
 
     else:
