@@ -1,5 +1,6 @@
 from fileinput import filename
 import os
+import shutil
 import zipfile
 from cv2 import transform
 from flask import Flask, render_template, request
@@ -59,6 +60,20 @@ def upload():
         names = []
         queimadas = []
 
+        try:
+
+            clearDir = "static/upload/Files"
+            dir = [os.path.join(clearDir, f)
+                   for f in sorted(os.listdir(clearDir))]
+
+            for img in dir:
+                os.remove(img)
+
+            os.rmdir("static/upload/Files")
+
+        except:
+            pass
+
         diretorio = './static/' + zipFile
 
         files = [os.path.join(diretorio, f)
@@ -83,14 +98,17 @@ def upload():
                 names.append(iName)
                 queimadas.append(img)
 
+        source = 'static/' + zipFile
+        dest = 'static/upload/Files'
+
         try:
-            source = 'static/' + zipFile
-            dest = 'static/upload/Files'
             os.rename(source, dest)
         except:
             pass
 
-        return render_template('predict.html', qtdFocos=len(queimadas), queimadas=queimadas, names=names)
+        os.remove(zipFile + 'zip')
+
+        return render_template('predict.html', qtdFocos=len(queimadas), total=len(files), queimadas=queimadas, names=names)
 
     else:
 
@@ -98,6 +116,10 @@ def upload():
         try:
             img = cv2.resize(img, (128, 128))
         except:
+            try:
+                os.remove(zipFile + 'jpg')
+            except:
+                pass
             return render_template('lab.html', cls=0, imgF=0, error=1)
 
         img = img.ravel()
@@ -108,8 +130,10 @@ def upload():
 
         cls = joblib_model.predict(img)[0]
         if cls == 0:
+            os.remove(zipFile + 'jpg')
             return render_template('lab.html', cls=cls, imgF=imgF, error=0)
         else:
+            os.remove(zipFile + 'jpg')
             return render_template('lab.html', cls=cls, imgF=imgF, error=0)
 
 

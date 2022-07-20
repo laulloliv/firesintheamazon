@@ -196,7 +196,8 @@ gap: 1em;
 .resultado-area{
   width: 37.5%;
   height: 19em;
-  background-color: rgba(217, 217, 217, 0.6);
+  background-color: rgba(233, 233, 233, 0.6);
+  box-shadow: 2px 2px 4px #adadad;
   margin: auto;
   margin-top: -2em;
   /* margin-bottom: 3.5em; */
@@ -227,6 +228,10 @@ gap: 1em;
   justify-content: space-between;
 }
 
+/* .img-foco:hover {
+  background-color: rgba(248, 85, 33, 0.7);
+} */
+
 span{
   margin-left: 2em;
 }
@@ -250,6 +255,11 @@ span{
 
 #p-resultado{
   font-weight: 600;
+  text-align: right; 
+}
+
+#p-resultado:focus {
+  outline: none;
 }
 
 
@@ -337,7 +347,6 @@ footer{
 #view-name{
   margin-top: 0.5em;
   margin-bottom: -1em;
-  /* margin-left: 2em; */
 
 }
 

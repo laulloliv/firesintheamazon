@@ -95,9 +95,10 @@
 
   #lab-area{
     width: 45%;
-    height: 16em;
+    height: 18em;
     border-radius: 10px;
-    background-color: rgba(217, 217, 217, 0.6);
+    background-color: rgba(233, 233, 233, 0.6);
+    box-shadow: 2px 2px 4px #adadad;
   }
 
   #title-lab{
@@ -157,7 +158,7 @@ display: flex;
 align-self: flex-end;
 justify-self: flex-end;
 margin-right: 1.9em;
-margin-top: 2.5em;
+margin-top: 1.5em;
 gap: 1em;
 }
 
@@ -195,7 +196,8 @@ gap: 1em;
 
 .resultado-area{
   width: 37.5%;
-  background-color: rgba(217, 217, 217, 0.6);
+  background-color: rgba(233, 233, 233, 0.6);
+  box-shadow: 2px 2px 4px #adadad;
   margin: auto;
   margin-top: -2em;
   margin-bottom: 3.5em;
