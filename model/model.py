@@ -1,9 +1,6 @@
 import cv2
 import numpy as np
 import os
-import tensorflow as tf
-import pandas as pd
-import matplotlib.pyplot as plt
 import joblib
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LogisticRegression

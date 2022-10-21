@@ -1,6 +1,5 @@
 from fileinput import filename
 import os
-import shutil
 import zipfile
 from cv2 import transform
 from flask import Flask, render_template, request
@@ -10,9 +9,9 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from werkzeug.utils import secure_filename
 
-
-app = Flask(__name__, static_folder='static')
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'upload')
+app = Flask(__name__, static_folder='static')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 joblib_file = "model/lg_model.sav"
 joblib_model = joblib.load(joblib_file)
@@ -35,11 +34,14 @@ def predictFires():
 
 @app.route('/predict', methods=["POST"])
 def upload():
+    if 'imageFile' not in request.files:
+        print("Error")
     file = request.files['imageFile']
-    savePath = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
-    file.save(savePath)
+    filename = secure_filename(file.filename)
+    savepath = app.config['UPLOAD_FOLDER'] + filename
+    file.save(savepath)
 
-    img_file = "upload/" + file.filename
+    img_file = 'upload' + file.filename
     imgF = 0
 
     if img_file:
@@ -48,7 +50,7 @@ def upload():
         imgF = 0
 
     tam = len(img_file)
-    zipFile = img_file[:tam-3]
+    zipFile = img_file[:tam-4]
 
     if img_file[tam-3:] == "zip":
 
@@ -74,7 +76,8 @@ def upload():
         except:
             pass
 
-        diretorio = './static/' + zipFile
+        newpath = zipFile.replace('upload', 'upload/')
+        diretorio = './static/' + newpath
 
         files = [os.path.join(diretorio, f)
                  for f in sorted(os.listdir(diretorio))]
@@ -93,31 +96,35 @@ def upload():
             cls = joblib_model.predict(img_test)[0]
 
             if cls != 0:
-                x = img.find(".", 3)
-                iName = img[x+2:]
-                names.append(iName)
-                queimadas.append(img)
+                # x = img.find(".", 3)
+                # iName = img[x+2:]
+                x = img.replace('iles\img', 'iles/img')
+                y = x.replace(diretorio + '/', '')
+                names.append(y)
+                queimadas.append(x)
 
-        source = 'static/' + zipFile
-        dest = 'static/upload/Files'
+        dest = './static/upload/Files'
+        os.rename(diretorio, dest)
 
-        try:
-            os.rename(source, dest)
-        except:
-            pass
+        for x in queimadas:
+            k = zipFile.replace('upload', '')
+            x = x.replace(k, 'Files')
 
-        os.remove(zipFile + 'zip')
+        oldpath = newpath.replace('upload/', 'upload')
+        os.remove(oldpath + '.zip')
 
         return render_template('predict.html', qtdFocos=len(queimadas), total=len(files), queimadas=queimadas, names=names)
 
     else:
 
+        img = img_file.replace('jpg', '.jpg')
         img = cv2.imread(img_file)
         try:
             img = cv2.resize(img, (128, 128))
         except:
             try:
-                os.remove(zipFile + 'jpg')
+                os.remove('./' + zipFile + '.jpg')
+                print('error')
             except:
                 pass
             return render_template('lab.html', cls=0, imgF=0, error=1)
@@ -130,10 +137,10 @@ def upload():
 
         cls = joblib_model.predict(img)[0]
         if cls == 0:
-            os.remove(zipFile + 'jpg')
+            os.remove(zipFile + '.jpg')
             return render_template('lab.html', cls=cls, imgF=imgF, error=0)
         else:
-            os.remove(zipFile + 'jpg')
+            os.remove(zipFile + '.jpg')
             return render_template('lab.html', cls=cls, imgF=imgF, error=0)
 
 
