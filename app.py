@@ -96,8 +96,6 @@ def upload():
             cls = joblib_model.predict(img_test)[0]
 
             if cls != 0:
-                # x = img.find(".", 3)
-                # iName = img[x+2:]
                 x = img.replace('iles\img', 'iles/img')
                 y = x.replace(diretorio + '/', '')
                 names.append(y)
