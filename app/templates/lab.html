@@ -7,7 +7,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static',filename='styles/lab/style.css') }}"
+      href="{{ url_for('static',filename='styles/lab.css') }}"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,7 +39,7 @@
           <p id="title-lab">Analise uma Imagem de Satélite</p>
           <p id="text-text-lab" style="font-size: 0.8em; margin: -1em 0em 2em 2.5em; width: 90%">Observação: Para analisar mútilplas imagens, certifique-se que seu arquivo encontra-se no formato .zip</p>
           <form
-            action="http://127.0.0.1:5000/predict"
+            action="http://127.0.0.1:5000/upload"
             enctype="multipart/form-data"
             method="post"
           >
@@ -71,8 +71,8 @@
           </form>
         </div>
       </section>
-
-      {% if imgF == 1 %} {% if cls == 0 %}
+      {% if result %}
+      {% if result == 0 %}
       <section>
         <div class="resultado-area">
           <p id="title-resultado-noburn">Resultado</p>
@@ -86,7 +86,9 @@
           <p id="p-resultado">É Queimada</p>
         </div>
       </section>
-      {% endif %} {% else %} {% endif %}
+      {% endif %}
+      {% endif %}
+
     </main>
     <hr id="hr-b" />
     <section class="ftr-apoio">
