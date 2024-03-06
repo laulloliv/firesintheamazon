@@ -1,5 +1,0 @@
-Flask==2.2.3
-joblib==1.2.0
-opencv-python==4.7.0.72
-scikit-learn==1.0.2
-Werkzeug==2.2.3
